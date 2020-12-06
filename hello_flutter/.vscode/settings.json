@@ -1,0 +1,6 @@
+{
+    "editor.wordWrapColumn": 120,
+    "dart.lineLength": 150,
+    "yaml.format.printWidth": 150,
+    "html.format.wrapLineLength": 150
+}
