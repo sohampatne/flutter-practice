@@ -4,12 +4,9 @@ class AnswerButton extends StatelessWidget {
   String ansText;
   Color buttonColor;
   FontWeight fontWeight;
-  Function onPressFunction;  
+  Function onPressFunction;
 
-  AnswerButton(this.ansText,
-      {this.onPressFunction,
-      this.buttonColor = Colors.yellow,
-      this.fontWeight = FontWeight.bold});
+  AnswerButton(this.ansText, {this.onPressFunction, this.buttonColor = Colors.yellow, this.fontWeight = FontWeight.bold});
 
   @override
   Widget build(BuildContext context) {

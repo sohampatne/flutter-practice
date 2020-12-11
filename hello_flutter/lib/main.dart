@@ -33,6 +33,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   void questionIndex() {
     setState(() {
+      counter++;
       print(counter);
       if (questionIndexGenerator == questions.length - 1) {
         questionIndexGenerator = 0;

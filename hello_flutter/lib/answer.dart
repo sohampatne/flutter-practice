@@ -14,6 +14,6 @@ class AnswerButton extends StatelessWidget {
         color: buttonColor, child: new Text(answerText), onPressed: selector);
     // return button;
     return Container(
-        width: double.infinity, margin: EdgeInsets.all(1), child: button);
+        width: double.infinity, margin: EdgeInsets.all(0.1), child: button);
   }
 }
