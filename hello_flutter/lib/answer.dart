@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class AnswerButton extends StatelessWidget {
-  String answerText;
-  Function selector;
-  Color buttonColor;
-  AnswerButton({this.answerText, this.buttonColor, this.selector});
+  String buttonName;
+  Function onPressedFunction;
+  Color color = Colors.tealAccent;
+
+  AnswerButton({this.buttonName, this.color, this.onPressedFunction});
 
   @override
   Widget build(BuildContext context) {
-    print("Inside build of AnswerButton");
-    RaisedButton button = new RaisedButton(
-        color: buttonColor, child: new Text(answerText), onPressed: selector);
-    // return button;
     return Container(
-        width: double.infinity, margin: EdgeInsets.all(0.1), child: button);
+        width: double.infinity,
+        child: RaisedButton(child: Text(buttonName, style: TextStyle(fontSize: 24)), color: color, onPressed: onPressedFunction));
   }
 }

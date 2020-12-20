@@ -5,8 +5,7 @@ class Question {
   int answerIndex;
   int marks;
 
-  Question(
-      {this.id, this.question, this.options, this.answerIndex, this.marks});
+  Question({this.id, this.question, this.options, this.answerIndex, this.marks});
 
   Map<String, dynamic> toMap() {
     return {
@@ -45,12 +44,7 @@ class QuestionBank {
   Question q3 = new Question(
       id: 102,
       question: 'In which language is ‘The Rigveda’ written?',
-      options: [
-        'Vedic Sanskrit',
-        'Vedic Hindi',
-        'Vedic Tamil',
-        'Vedic Marathi'
-      ],
+      options: ['Vedic Sanskrit', 'Vedic Hindi', 'Vedic Tamil', 'Vedic Marathi'],
       answerIndex: 0,
       marks: 5);
 

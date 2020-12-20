@@ -53,7 +53,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     print('Inside MyAppState build');
-    
+
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(

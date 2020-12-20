@@ -1,43 +1,19 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class Question extends StatelessWidget {
-  final String _text;
-  var questionIndex = 0;
-  Question(this._text);
+class QuestionText extends StatelessWidget {
+  String text;
 
-  void nextQuestion() {
-    if (questionIndex == questionList.length - 1) {
-      questionIndex = 0;
-    } else {
-      questionIndex++;
-    }
-  }
-
-  List<String> questionList = [
-    'Who are you?',
-    'Who is smart?',
-    'Who is tired?',
-    'Who is the most troublesome?',
-    'Who is the most mad?',
-    'Who is the most selfless to Soham?'
-  ];
-
+  QuestionText(this.text);
   @override
   Widget build(BuildContext context) {
-    print("Inside build of Question");
+    // return Text(Text);
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.all(20),
-      child: Text(
-        _text,
-        style: TextStyle(
-            fontSize: 24,
-            color: Colors.cyan[800],
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic),
-        textAlign: TextAlign.center,
-      ),
-    );
+        width: double.infinity,
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ));
   }
 }

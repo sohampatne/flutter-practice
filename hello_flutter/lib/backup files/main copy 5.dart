@@ -3,7 +3,6 @@ import './question1.dart';
 import './answer1.dart';
 import './questionBank.dart';
 
-
 void main() {
   MyApp sohamTrialApp = new MyApp();
   runApp(sohamTrialApp);
