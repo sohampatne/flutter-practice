@@ -21,15 +21,16 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   int totalScore = 0;
   Color gameOverColor = Colors.transparent;
+  Color gameOverBGColor = Colors.transparent;
   int qIndex = 0;
 
   var questions = ['What is 1+5?', 'What is 2+6?', 'What is 9+2?', 'What is 5+2?', 'What is 3+3?'];
 
-  static List q1Options = ['6', '1', '2', '3'];
-  static List q2Options = ['4', '8', '5', '6'];
-  static List q3Options = ['9', '7', '11', '8'];
-  static List q4Options = ['5', '7', '9', '12'];
-  static List q5Options = ['2', '6', '7', '4'];
+  static List q1Options = ['6', '1', '2', '3', '7'];
+  static List q2Options = ['4', '8', '5', '6', '9'];
+  static List q3Options = ['9', '7', '11', '8', '4'];
+  static List q4Options = ['5', '7', '9', '12', '2'];
+  static List q5Options = ['2', '6', '7', '4', '5'];
   static List options = [q1Options, q2Options, q3Options, q4Options, q5Options];
   static List answers = ['6', '8', '11', '7', '6'];
 
@@ -60,7 +61,7 @@ class MyAppState extends State<MyApp> {
       // audioCache.play('audios/wow.mp3');
     }
 
-    Timer(Duration(milliseconds: 1000), nextQuestion);
+    Timer(Duration(seconds: 3), nextQuestion);
 
     // _timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
     //   print(DateTime.now());
@@ -74,8 +75,8 @@ class MyAppState extends State<MyApp> {
 
     if (qIndex == questions.length - 1) {
       endTest();
-    } else
-      qIndex++;
+    }
+    qIndex++;
 
     print(qIndex);
 
@@ -85,8 +86,11 @@ class MyAppState extends State<MyApp> {
   }
 
   void endTest() {
-    gameOverColor = Colors.cyan; //[800]
-    if (totalScore == 2) {
+    print('Game Over');
+    gameOverColor = Colors.cyanAccent[700];
+    gameOverBGColor = Colors.teal[100];
+    playOrRetry = "???";
+    if (totalScore <= 2) {
       playOrRetry = 'You loose, retry';
     } else if (totalScore >= 3) {
       playOrRetry = 'You won! Play again';
@@ -95,6 +99,38 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // final names = ['Max', 'Manu'];
+    // final result = names.map((name) => Text(name)).toList();
+
+    List<Widget> questionAnswerButtons = List<Widget>();
+    print(' qIndex=$qIndex');
+    print(' questions.length=${questions.length}');
+
+    if (qIndex < questions.length) {
+      List<dynamic> currentQuestionOptions = options[qIndex];
+      List<Widget> optionButtons = List<Widget>();
+      var colorOptions = [Colors.red, Colors.yellow, Colors.blue, Colors.green, Colors.deepPurple];
+
+/*      |🤔|------------------------------💡|REMEMBER|💡------------------------------|🤔|
+        for(you can attach any variables you need in this for loop;
+        define the argument here;
+        insert the function or method that that should be called at the end of this for loop) 
+*/
+      for (int index = 0; index < currentQuestionOptions.length; index++) {
+        AnswerButton button = AnswerButton(
+          buttonName: currentQuestionOptions[index],
+          color: colorOptions[qIndex][100 * (index + 1)],
+          onPressedFunction: () {
+            submitQuestion(currentQuestionOptions[index]);
+          },
+        );
+        optionButtons.add(button);
+      }
+
+      questionAnswerButtons.add(QuestionText(questions[qIndex]));
+      questionAnswerButtons.addAll(optionButtons);
+    }
+
     print('Begin MyApp Build Method');
     return MaterialApp(
       theme: new ThemeData(
@@ -103,57 +139,43 @@ class MyAppState extends State<MyApp> {
         accentColor: Colors.black,
       ),
       home: Scaffold(
-          backgroundColor: Colors.cyan[100], //
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text('Game for Kids'),
+            elevation: 0,
           ),
           body: Column(children: [
-            QuestionText(questions[qIndex]),
-            AnswerButton(
-              buttonName: options[qIndex][0],
-              color: Colors.red[200], //
-              onPressedFunction: () {
-                submitQuestion(options[qIndex][0]);
-              },
-            ),
-            AnswerButton(
-              buttonName: options[qIndex][1],
-              color: Colors.yellow[200], //
-              onPressedFunction: () {
-                submitQuestion(options[qIndex][1]);
-              },
-            ),
-            AnswerButton(
-              buttonName: options[qIndex][2],
-              color: Colors.blue[200], //[200]
-              onPressedFunction: () {
-                submitQuestion(options[qIndex][2]);
-              },
-            ),
-            AnswerButton(
-              buttonName: options[qIndex][3],
-              color: Colors.green[200], //[200]
-              onPressedFunction: () {
-                submitQuestion(options[qIndex][3]);
-              },
-            ),
+            ...questionAnswerButtons,
+            // ...result,
             Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: Text(
-                  'GAME OVER' + 'Score = $totalScore/$denominator',
-                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold, color: gameOverColor),
+                  '\n\n\nGAME OVER\nScore = $totalScore/$denominator',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: gameOverColor,
+                  ),
+                  textAlign: TextAlign.center,
                 )),
             Container(
                 width: double.infinity,
                 child: RaisedButton(
-                    child: Text(playOrRetry),
-                    color: Colors.transparent,
+                    child: Text(playOrRetry,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: gameOverColor,
+                        )),
+                    color: gameOverBGColor,
+                    elevation: 0,
                     onPressed: () {
                       qIndex = -1;
                       totalScore = 0;
-                      gameOverColor = Colors.transparent;
                       playOrRetry = "";
+                      gameOverColor = Colors.transparent;
+                      gameOverBGColor = Colors.transparent;
                       nextQuestion();
                     }))
           ])),
